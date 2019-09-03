@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Knapsack
 {
@@ -42,7 +43,8 @@ namespace Knapsack
 
             var bestCaseValue = -1;
             var bestCaseWeight = -1;
-            string winningCombination = "";
+            //string winningCombination = "";
+            var stolenItems = new List<Item>();
 
             var iterationCount = Math.Pow(2, stealableItems.Length); // 2^(items.Length)
             for(var i = 0; i < iterationCount; i++)
@@ -77,9 +79,11 @@ namespace Knapsack
                 {
                     bestCaseValue = totalAmount;
                     bestCaseWeight = totalWeight;
-                    winningCombination = combination;
+                    stolenItems.Clear();
+                    for (var selectedIndex = 0; selectedIndex < combination.Length; selectedIndex++)
+                        if (combination[selectedIndex].Equals('1'))
+                            stolenItems.Add(stealableItems[selectedIndex]);
 
-                    Console.WriteLine("Possible winning combination = " + winningCombination);
                     Console.WriteLine("With a value of " + bestCaseValue + " - " + bestCaseWeight);
                 }
             }
